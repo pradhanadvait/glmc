@@ -42,7 +42,10 @@ void glmc_vec3f_from_4f(vec3f dest, vec4f src) //dest = src(1:3)
 
 void glmc_vec3f_copy(vec3f dest, vec3f src) // dest = src
 {
-	dest = src;
+	for(int i = 0; i < 3; i++)
+	{
+		dest[i] = src [i];
+	}
 }
 
 float glmc_vec3f_sqrlength(vec3f vec) // (length(vec))^2
@@ -71,7 +74,7 @@ void glmc_vec3f_normlize(vec3f dest, vec3f src) // dest = src / norm(src)
 	int norm=0;
 	for(int i = 0; i < 3; i++)
 	{
-		norm = src[i]*src[i];
+		norm += src[i]*src[i];
 	}
 	
 	for(int i = 0; i < 3; i++)
@@ -118,7 +121,6 @@ void glmc_vec3f_mul(vec3f dest, vec3f src_a, vec3f src_b) // dest = src_a * src_
 	{
 		dest[i] = src_a[i] * src_b[i];
 	}
-
 }
 
 void glmc_vec3f_mul_dest(vec3f src_dest, vec3f src_b) // dest *= src_a;
@@ -132,21 +134,23 @@ void glmc_vec3f_mul_s(vec3f dest, vec3f src_a, float src_b) // dest = src_a * sc
 {
 	for(int i = 0; i < 3; i++)
 	{
-		src_dest[i] *= src_b;
+		src_dest[i] = src_a[i]*src_b;
 	}
 }
 
 void glmc_vec3f_div(vec3f dest, vec3f src_a, vec3f src_b) // dest = src_a / src_b;
 {
-	for(int i = 0; i < 3; i++)
+	if((src_b[0] != 0) && (src_b[1] != 0) && (src_b[2] != 0))
 	{
-		if(src_b[i] != 0)
-		dest[i] = src_a[i] / src_b[i];
-		else
+		for(int i = 0; i < 3; i++)
 		{
-			printf("Cannot Divide by zero!");
-			break;
+			dest[i] = src_a[i] / src_b[i];
 		}
+	}
+	else
+	{
+		printf("Cannot Divide by zero!");
+		break;
 	}
 }
 void glmc_vec3f_div_dest(vec3f src_dest, vec3f src_b) // dest /= src_a;

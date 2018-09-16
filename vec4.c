@@ -65,7 +65,7 @@ int  glmc_vec4f_is_normalized(vec4f src)
 	int norm=0;
 	for(int i = 0; i < 4; i++)
 	{
-		norm = src[i] * src[i];
+		norm += src[i] * src[i];
 	}
 	
 	return norm == 1;
@@ -136,7 +136,7 @@ void glmc_vec4f_mul_s(vec4f dest, vec4f src_a, float src_b) // dest = src_a * sc
 {
 	for(int i = 0; i < 4; i++)
 	{
-		src_dest[i] *= src_b;
+		src_dest[i] = src_a[i]*src_b;
 	}
 }
 
